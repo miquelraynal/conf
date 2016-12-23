@@ -1,0 +1,8 @@
+# Fichier généré automatiquement - utilisez le menu de configuration de
+# minicom pour changer les paramètres.
+pu port             /dev/ttyUSB0
+pu escape-key       ^Z
+pu hasdcd           No
+pu rtscts           No
+pu histlines        9999
+pu logfname         /tmp/minicom.log
