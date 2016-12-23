@@ -1,0 +1,12 @@
+[user]
+	email = raynal.miquel@gmail.com
+	name = Miquel Raynal
+[core]
+	editor = emacs --no-splash -nw
+[color]
+	ui = auto
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = raynal.miquel@gmail.com
+	smtpServerPort = 587
