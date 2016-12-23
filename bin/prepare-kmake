@@ -1,0 +1,6 @@
+source /opt/poky/2.0/environment-setup-armv5e-poky-linux-gnueabi
+cd ~/linux-stable
+export ARCH=arm
+export CROSS_COMPILE=$TARGET_PREFIX
+export LOADADDR=0xA0008000
+unset LDFLAGS
