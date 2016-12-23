@@ -58,7 +58,7 @@ fi
 
 # Git
 function git-branch-name {
-  git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3
+  git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3-
 }
 function git-branch-prompt {
   local branch=`git-branch-name`
