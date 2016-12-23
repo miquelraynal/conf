@@ -1,0 +1,28 @@
+cd ~/android/system/
+. build/envsetup.sh
+breakfast surnia
+export ARCH=arm
+export CROSS_COMPILE=arm-linux-androideabi-
+
+cd kernel/motorola/msm8916/
+make surnia_defconfig
+make menuconfig
+diff -s arch/arm/configs/surnia_defconfig .config
+if [ $? -ne 0 ]; then
+   cp .config arch/arm/configs/surnia_defconfig
+   cp .version /tmp/
+   echo "MAKE MODULES"
+   make modules
+   cp Module.symvers /tmp/
+   echo "MAKE FIRST MRPROPER"
+   make mrproper
+   cp /tmp/.version .
+   echo "SECOND MAKE MRPROPER"
+   make mrproper
+   croot
+   echo "MAKE BOOT.IMG"
+   mka LOCALVERSION="" bootimage
+   cp /tmp/Module.symvers kernel/motorola/msm8916/
+fi
+croot
+# sudo fastboot boot $OUT/boot.img

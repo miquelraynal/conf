@@ -1,0 +1,14 @@
+cd ~/android/system
+. build/envsetup.sh
+breakfast surnia
+cd -
+export ARCH="arm"
+export CROSS_COMPILE="arm-linux-androideabi-"
+cd ~/android/system/kernel/motorola/msm8916/
+cp arch/arm/configs/surnia_defconfig .config
+cp /tmp/Module.symvers .
+make oldconfig
+make prepare
+make scripts
+make modules_prepare
+cd -
