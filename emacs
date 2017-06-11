@@ -6,7 +6,7 @@
 (column-number-mode "on")
 
 ;; External packages
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (require 'linum)
 (global-linum-mode 1)
@@ -74,7 +74,7 @@ Deletes whitespace at join."
 
 ;; DTS mode
 (require 'dts-mode)
-(load-file "~/.emacs.d/dts-mode.el")
+(load-file "~/.emacs.d/lisp/dts-mode.el")
 
 ;; 80th column limit
 (require 'fill-column-indicator)
@@ -83,7 +83,7 @@ Deletes whitespace at join."
 (setq fci-rule-color "grey80")
 (setq-default fci-rule-character-color "green")
 ;(add-hook 'after-change-major-mode-hook 'fci-mode)
-(load-file "~/.emacs.d/fill-column-indicator.el")
+(load-file "~/.emacs.d/lisp/fill-column-indicator.el")
 
 ;; Whitespaces and 80th column rule
  (require 'whitespace)
