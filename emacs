@@ -89,3 +89,10 @@ Deletes whitespace at join."
  (require 'whitespace)
  (setq whitespace-style '(face empty lines-tail trailing))
  (global-whitespace-mode t)
+
+;; Keyboard shortcuts to switch between windows
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x p") '(lambda () (interactive) (other-window -1))) ; Previous window
