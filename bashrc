@@ -111,6 +111,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias em='emacs --no-splash -nw'
 
+alias checkp="./scripts/checkpatch.pl --strict"
+alias lsut="ls -l /dev/ttyUSB*"
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -132,7 +135,7 @@ if ! shopt -oq posix; then
 fi
 
 # Use the build environment (workstation setup)
-export PATH=.:${HOME}/bin:${PATH}
+export PATH=${HOME}/bin:${HOME}/intragit/bin:${PATH}
 export USE_CCACHE=1
 
 # Change COLUMNS and ROWS each time is needed
@@ -140,3 +143,10 @@ export USE_CCACHE=1
 
 # Change my favourite editor settings <3
 export EDITOR=/usr/bin/emacs
+
+# Lavabo autocompletion
+eval "$(register-python-argcomplete lavabo)"
+export LAVABO_BOARD=armada-385-db-ap_01
+
+# Make scripts from intragit need this:
+export FEINTRAGIT=/home/mraynal/intragit/
