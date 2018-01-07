@@ -1,0 +1,58 @@
+#!/bin/sh
+
+if [ ! "$1" ]; then
+    echo "usage:   $(basename $0) <mtd-device> [<iterations>]"
+    echo "example: $(basename $0) /dev/mtd2    (default 10 iterations)"
+    exit 1
+fi
+
+DEV=$1
+
+if [ "$2" ]; then
+    ITERATIONS=$2
+else
+    ITERATIONS=10
+fi
+
+display() {
+    echo
+    echo
+    echo "#####===============> $* <==============#####"
+    echo
+}
+
+display "NAND BIT ERRS"
+nandbiterrs -i $DEV
+
+display "NAND PAGE TEST"
+nandpagetest -c $ITERATIONS $DEV
+
+display "NAND SUBPAGE TEST"
+nandsubpagetest -c $ITERATIONS $DEV
+
+#display "NAND TEST"
+#nandtest -p $ITERATIONS $DEV
+
+display "FLASH READ TEST"
+flash_readtest -c $ITERATIONS $DEV
+
+display "FLASH SPEED"
+flash_speed -d -c $ITERATIONS $DEV
+
+display "FLASH STRESS"
+flash_stress -c $ITERATIONS $DEV
+
+#display "FLASH TORTURE"
+#flash_torture -c $ITERATIONS $DEV
+
+display "UBIFORMAT"
+ubiformat $DEV
+
+display "UBIATTACH"
+ubiattach -p $DEV
+
+display "UBIMKVOL"
+ubimkvol /dev/ubi0 -N test_fe -s 64MiB
+
+display "MOUNT"
+mount -t ubifs ubi0:test_fe ./ubifs-volume/

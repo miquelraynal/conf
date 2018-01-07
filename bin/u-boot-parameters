@@ -1,0 +1,196 @@
+#!/bin/sh
+
+IP=192.168.0.15
+ROOT="/tftpboot"
+
+if [ "$1" = "pxa" ]; then
+
+    ARCH="32"
+    VENDOR="marvell"
+    BOARD="pxa300"
+    KADDR="0x80a00000" # make cm_x300_defconfig; make uImage
+#    DADDR="0x83f00000"
+    PARAMS="console=ttyS2,38400 init=/bin/sh" # setenv ethaddr 1:2:3:4:5:6
+
+elif [ "$1" = "385db" ]; then
+
+    ARCH="32"
+    VENDOR="marvell"
+    BOARD="armada-385-db-ap"
+    KADDR="0x2080000"
+    DADDR="0x2000000"
+    PARAMS="console=ttyS1,115200n8"
+
+elif [ "$1" = "375db" ]; then
+
+    ARCH="32"
+    VENDOR="marvell"
+    BOARD="armada-375-db"
+    KADDR="0x2000000"
+#    DADDR="0x2000000"
+    PARAMS="console=ttyS0,115200"
+
+elif [ "$1" = "370rd" ]; then
+
+    ARCH="32"
+    VENDOR="marvell"
+    BOARD="armada-370-rd"
+    KADDR="0x2000000"
+    DADDR="0x1000000"
+    PARAMS="console=ttyS0,115200"
+
+elif [ "$1" = "398db" ]; then
+
+    ARCH="32"
+    VENDOR="marvell"
+    BOARD="armada-398-db"
+    KADDR="0x2000000"
+    DADDR="0x1000000"
+    PARAMS="console=ttyS0,115200"
+
+elif [ "$1" = "375db" ]; then
+
+    ARCH="32"
+    VENDOR="marvell"
+    BOARD="armada-375-db"
+    KADDR="0x1800000"
+    DADDR="0x1000000"
+    PARAMS="console=ttyS0,115200"
+
+elif [ "$1" = "3720db" ]; then
+
+    ARCH="64"
+    VENDOR="marvell"
+    BOARD="armada-3720-db"
+    KADDR="0x2000000"
+    DADDR="0x4000000"
+    PARAMS="console=ttyMV0,115200" #ip=:::::dhcp:eth0:"
+
+elif [ "$1" = "7040db" ]; then
+
+    ARCH="64"
+    VENDOR="marvell"
+    BOARD="armada-7040-db"
+    KADDR="0x5000000"
+    DADDR="0x4f00000"
+    PARAMS="console=ttyS0,115200"
+
+elif [ "$1" = "espbin" ]; then
+
+    ARCH="64"
+    VENDOR="marvell"
+    BOARD="armada-3720-espressobin"
+    KADDR="0x4300000"
+    DADDR="0x4200000"
+    PARAMS="console=ttyMV0,115200 earlycon=ar3700_uart,0xd0012000"
+
+elif [ "$1" = "8040db" ]; then
+
+    ARCH="64"
+    VENDOR="marvell"
+    BOARD="armada-8040-db"
+    KADDR="0x5000000"
+    DADDR="0x4f00000"
+    PARAMS="console=ttyS0,115200 ip=dhcp"
+
+elif [ "$1" = "mcbin" ]; then
+
+    ARCH="64"
+    VENDOR="marvell"
+    BOARD="armada-8040-mcbin"
+    KADDR="0x5000000"
+    DADDR="0x4f00000"
+    PARAMS="console=ttyS0,115200" # ip=:::::dhcp:eth2:"
+
+elif [ "$1" = "p500" ]; then
+
+    ARCH="32"
+    VENDOR="keysight"
+    KADDR="0x2000000"
+    PARAMS="console=ttyAMA0,115200"
+
+else
+
+    cat <<EOF
+No board name, try:
+$(basename $0) 385             # Armada-385-DB-AP
+$(basename $0) espbin          # Armada-3720-ESPRESSObin
+$(basename $0) mcbin           # Armada-8040-MACCHIATObin
+$(basename $0) 3720db          # Armada-3720-DB
+$(basename $0) 7040db          # Armada-7040-DB
+$(basename $0) 8040db          # Armada-8040-DB
+
+Append mv     to refer to Marvell tree (LSP).
+Append mv-pub to refer to the public tree (backport)
+Append anything else to refer to an existing symbolic link.
+
+You may add usb or rootmmc as the last parameter in order
+to boot from USB and/or use eMMC as rootfs storage.
+EOF
+    exit
+
+fi
+
+if [ $ARCH -eq 32 ]; then BOOT="bootz"; else BOOT="booti"; fi
+if [ "$2" ] &&
+       [ "$2" != "usb" ] &&
+       [ "$2" != "rootmmc" ] &&
+       [ "$2" != "static" ] &&
+       [ "$2" != "initramfs" ]; then SUFFIX="-$2"; fi
+if [ "$3" ] &&
+       [ "$3" != "usb" ] &&
+       [ "$3" != "rootmmc" ] &&
+       [ "$3" != "static" ] &&
+       [ "$3" != "initramfs" ]; then SUFFIX="${SUFFIX}-$3"; fi
+ROOTFS="/home/mraynal/${VENDOR}/rootfs/"
+NFS_ARGS="root=/dev/nfs rw nfsroot=${IP}:${ROOTFS} ip=dhcp"
+MMC_ARGS="rootfstype=ext4 root=/dev/mmcblk1p1 rw rootwait"
+if [ $ARCH -eq 32 ]; then
+    if [ "${DADDR}" ]; then
+	KERNEL_NAME="${VENDOR}-zImage${SUFFIX}"
+    else
+	KERNEL_NAME="${VENDOR}-uImage${SUFFIX}"
+    fi
+else
+    KERNEL_NAME="${VENDOR}-Image${ARCH}${SUFFIX}"
+fi
+if [ "${BOARD}" ]; then
+   DTB_NAME="${BOARD}${SUFFIX}.dtb"
+fi
+GET_K_TFTP="tftpboot ${KADDR} ${ROOT}/${KERNEL_NAME}"
+GET_K_USB="fatload usb 0 ${KADDR} ${KERNEL_NAME}"
+if [ "${DADDR}" ]; then
+    GET_D_TFTP="tftpboot ${DADDR} ${ROOT}/${DTB_NAME}"
+    GET_D_USB="fatload usb 0 ${DADDR} ${DTB_NAME}"
+    START="${BOOT} ${KADDR} - ${DADDR}"
+else
+    START="bootm ${KADDR}"
+fi
+
+PREPARE_USB="usb start"
+if [ $(echo $* | grep -ci 'static') -ne 0 ]; then
+    PREPARE_TFTP="setenv ipaddr 192.168.0.120; setenv serverip $IP"
+else
+    PREPARE_TFTP="dhcp; setenv serverip $IP"
+fi
+
+BOOTCMD_TFTP="${PREPARE_TFTP}; ${GET_K_TFTP}; ${GET_D_TFTP}; ${START}"
+BOOTCMD_USB="${PREPARE_USB}; ${GET_K_USB}; ${GET_D_USB}; ${START}"
+
+PARAMS="${PARAMS} ignore_loglevel"
+if [ $(echo $* | grep -ci 'rootmmc') -ne 0 ]; then
+    BOOTARGS="${PARAMS} ${MMC_ARGS}"
+elif [ $(echo $* | grep -ci 'initramfs') -ne 0 ]; then
+    BOOTARGS="${PARAMS}"
+else
+    BOOTARGS="${PARAMS} ${NFS_ARGS}"
+fi
+
+if [ $(echo $* | grep -ci 'usb') -ne 0 ]; then
+    BOOTCMD="$BOOTCMD_USB"
+else
+    BOOTCMD="$BOOTCMD_TFTP"
+fi
+
+SETUP="setenv bootargs '${BOOTARGS}'; setenv barryrun '${BOOTCMD}'; setenv bootcmd 'run barryrun'"
+echo "${SETUP}; saveenv; boot"

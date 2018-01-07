@@ -1,0 +1,30 @@
+#!/bin/sh
+
+LOCATION="/home/mraynal/toolchains/"
+STYLE="bleeding-edge"
+if [ "$2" ]; then
+    STYLE=$2 # "stable" ?
+fi
+
+if [ $1 -eq 32 ]; then
+
+    echo "Configuring for arm architecture..."
+    ARMARCH=armv7
+    if [ "$3" ]; then
+	ARMARCH=$3 # "armv5" ?
+    fi
+    export ARCH="arm"
+    export CROSS_COMPILE="${LOCATION}/${ARMARCH}-eabihf--glibc--${STYLE}/bin/arm-linux-"
+
+elif [ $1 -eq 64 ]; then
+
+    echo "Configuring for arm64 architecture..."
+    ARMARCH=aarch64
+    export ARCH="arm64"
+    export CROSS_COMPILE="${LOCATION}/${ARMARCH}--glibc--${STYLE}/bin/${ARMARCH}-linux-"
+
+else
+    echo "Error: please specify architecture 32 or 64 bits."
+    unset ARCH
+    unset CROSS_COMPILE
+fi

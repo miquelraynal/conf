@@ -1,0 +1,165 @@
+require ["fileinto", "mailbox", "vacation"];
+
+if header :contains ["X-Spam-Flag"] ["YES"] {
+ fileinto "SPAM"; stop;
+}
+elsif address :contains ["to","cc"] ["info@free-electrons.com","employeestaff@free-electrons.com"] {
+ fileinto "0-info"; stop;
+}
+elsif header :contains "List-Id" "linux-arm-kernel.lists.infradead.org" {
+ fileinto "1-linux-arm-kernel"; stop;
+}
+elsif header :contains "List-Id" "linux-mtd.lists.infradead.org" {
+ fileinto "1-linux-mtd"; stop;
+}
+elsif header :contains "List-Id" "netdev.vger.kernel.org" {
+ fileinto "1-linux-netdev"; stop;
+}
+elsif header :contains "List-Id" "u-boot.lists.denx.de" {
+ fileinto "2-u-boot"; stop;
+}
+elsif header :contains "List-Id" "barebox.lists.infradead.org" {
+ fileinto "2-barebox"; stop;
+}
+elsif header :contains "List-Id" "kernelnewbies.kernelnewbies.org" {
+ fileinto "2-kernelnewbies"; stop;
+}
+elsif header :contains "List-Id" "buildroot.busybox.net" {
+ fileinto "2-buildroot"; stop;
+}
+elsif header :contains "List-Id" "busybox.busybox.net" {
+ fileinto "2-busybox"; stop;
+}
+
+elsif header :contains "List-Id" "linux-arm.lists.infradead.org" {
+ fileinto "linux-arm"; stop;
+}
+elsif header :contains "List-Id" "linux-tiny.selenic.com" {
+ fileinto "linux-tiny"; stop;
+}
+elsif header :contains "List-Id" "debian-embedded" {
+ fileinto "debian-embedded"; stop;
+}
+elsif header :contains "List-Id" "linux-embedded.vger.kernel.org" {
+ fileinto "linux-embedded"; stop;
+}
+elsif header :contains "List-Id" "qemu-devel.nongnu.org" {
+ fileinto "qemu-devel"; stop;
+}
+elsif header :contains "List-Id" "uclinux-dev.uclinux.org" {
+ fileinto "uclinux-dev"; stop;
+}
+elsif header :contains "List-Id" "scratchbox-users" {
+ fileinto "scratchbox"; stop;
+}
+elsif header :contains "List-Id" "crossgcc" {
+ fileinto "crossgcc"; stop;
+}
+elsif header :contains "List-Id" "u-boot.lists.denx.de" {
+ fileinto "u-boot"; stop;
+}
+elsif header :contains "List-Id" "autoconf.gnu.org" {
+ fileinto "autoconf"; stop;
+}
+elsif header :contains "List-Id" "devel.linuxdriverproject.org" {
+ fileinto "driver-project"; stop;
+}
+elsif header :contains "List-Id" "linux-pm.lists.linux-foundation.org" {
+ fileinto "linux-pm"; stop;
+}
+elsif header :contains "List-Id" "linux-omap.vger.kernel.org" {
+ fileinto "linux-omap"; stop;
+}
+elsif header :contains "List-Id" "uclinux-dist-devel.blackfin.uclinux.org" {
+ fileinto "uclinux-dist-dev"; stop;
+}
+elsif header :contains "List-Id" "libtool.gnu.org" {
+ fileinto "libtool"; stop;
+}
+elsif header :contains "List-Id" "uclibc.uclibc.org" {
+ fileinto "uclibc"; stop;
+}
+elsif header :contains "List-Id" "devel.uclibc-ng.org" {
+ fileinto "uclibc"; stop;
+}
+elsif header :contains "List-Id" "yocto.yoctoproject.org" {
+ fileinto "yocto"; stop;
+}
+elsif header :contains "List-Id" "cmake.public.kitware.com" {
+ fileinto "cmake"; stop;
+}
+elsif header :contains "List-Id" "linux-input.vger" {
+ fileinto "linux-input"; stop;
+}
+elsif header :contains "List-Id" "linux-usb.vger.kernel.org" {
+ fileinto "linux-usb"; stop;
+}
+elsif header :contains "List-Id" "linux-media.vger" {
+ fileinto "linux-media"; stop;
+}
+elsif header :contains "List-Id" "armadeus-forum.lists.sourceforge.net" {
+ fileinto "armadeus"; stop;
+}
+elsif header :contains "List-Id" "openocd-devel.lists.sourceforge.net" {
+ fileinto "openocd"; stop;
+}
+elsif header :contains "List-Id" "lttng-dev.lists.lttng.org" {
+ fileinto "lttng"; stop;
+}
+elsif header :contains "List-Id" "xorg-devel" {
+ fileinto "xorg-devel"; stop;
+}
+elsif header :contains "List-Id" "devicetree.vger.kernel.org" {
+ fileinto "devicetree-discuss"; stop;
+}
+elsif header :contains "List-Id" "ptxdist.pengutronix.de" {
+ fileinto "ptxdist"; stop;
+}
+elsif header :contains "List-Id" "interest.qt-project.org" {
+ fileinto "qt-interest"; stop;
+}
+elsif header :contains "List-Id" "linux-pci.vger.kernel.org" {
+ fileinto "linux-pci"; stop;
+}
+elsif header :contains "List-Id" "linux-kbuild.vger.kernel.org" {
+ fileinto "linux-kbuild"; stop;
+}
+elsif header :contains "List-Id" "ksummit-2013-discuss.lists.linuxfoundation.org" {
+ fileinto "ksummit-discuss"; stop;
+}
+elsif header :contains "List-Id" "alsa-devel.alsa-project.org" {
+ fileinto "alsa-devel"; stop;
+}
+elsif header :contains "List-Id" "gpsd-users.nongnu.org" {
+ fileinto "gpsd-users"; stop;
+}
+elsif header :contains "List-Id" "kernel-build-reports.lists.linaro.org" {
+ fileinto "kernel-build-reports"; stop;
+}
+elsif header :contains "List-Id" "python-dev.python.org" {
+ fileinto "python-dev"; stop;
+}
+elsif header :contains "List-Id" "libffi-discuss.sourceware.org" {
+ fileinto "libffi"; stop;
+}
+elsif header :contains "List-Id" "ksummit-discuss.lists.linuxfoundation.org" {
+ fileinto "ksummit-discuss"; stop;
+}
+elsif header :contains "List-Post" "musl@lists.openwall.com" {
+ fileinto "musl"; stop;
+}
+elsif header :contains "List-Id" "bug-gnulib.gnu.org" {
+ fileinto "bug-gnulib"; stop;
+}
+elsif header :contains "List-Id" "linux-bluetooth.vger.kernel.org" {
+ fileinto "linux-bluetooth"; stop;
+}
+elsif header :contains "List-Id" "patchwork.lists.ozlabs.org" {
+ fileinto "patchwork"; stop;
+}
+elsif header :contains "List-Id" "linux-pm.vger.kernel.org" {
+ fileinto "linux-pm"; stop;
+}
+elsif header :contains "List-ID" "linux-watchdog.vger.kernel.org" {
+ fileinto "linux-watchdog"; stop;
+}
