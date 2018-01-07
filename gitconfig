@@ -1,6 +1,6 @@
 [user]
 	name = Miquel Raynal
-	email = raynal.miquel@gmail.com
+	email = miquel.raynal@free-electrons.com
 
 [core]
 	editor = emacs --no-splash -nw
@@ -8,9 +8,12 @@
 
 [sendemail]
 	smtpEncryption = tls
-	smtpServer = smtp.gmail.com
-	smtpUser = raynal.miquel@gmail.com
+	smtpServer = mail.free-electrons.com
+	smtpUser = smmiquel
 	smtpServerPort = 587
+	smtpPass = xxx
+	aliasesfile = /home/mraynal/.git_aliases
+	aliasfiletype = mutt
 
 [alias]
 	##### Basic aliases

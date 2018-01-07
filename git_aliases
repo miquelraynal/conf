@@ -1,0 +1,45 @@
+# Free Electrons
+alias moi Miquel Raynal <miquel.raynal@free-electrons.com>
+alias thomas Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+alias gregory Gregory Clement <gregory.clement@free-electrons.com>
+alias antoine Antoine Tenart <antoine.tenart@free-electrons.com>
+alias boris Boris Brezillon <boris.brezillon@free-electrons.com>
+alias quentin Quentin Schulz <quentin.schulz@free-electrons.com>
+
+# Marvell
+alias nadav Nadav Haklai <nadavh@marvell.com>
+alias wilson Wilson Ding <dingwei@marvell.com>
+alias ofer Ofer Heifetz <oferh@marvell.com>
+alias neta Neta Zur Hershkovits <neta@marvell.com>
+alias hanna Hanna Hawa <hannah@marvell.com>
+alias marvell thomas, gregory, antoine, nadav, moi
+
+# DT Marvell
+alias jason-c Jason Cooper <jason@lakedaemon.net>
+alias andrew-l Andrew Lunn <andrew@lunn.ch>
+alias sebastian-h Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+alias dt-marvell-list <devicetree@vger.kernel.org>
+alias dt-marvell-maintainers gregory, jason-c, andrew-l, sebastian-h
+
+# SPI
+alias mark-b Mark Brown <broonie@kernel.org>
+alias spi-list <linux-spi@vger.kernel.org>
+alias spi-maintainer mark-b
+
+# Net
+alias david-m David S. Miller <davem@davemloft.net>
+alias net-list netdev@vger.kernel.org
+alias net-maintainer david-m
+
+# MTD
+alias richard-w Richard Weinberger <richard@nod.at>
+alias david-w David Woodhouse <dwmw2@infradead.org>
+alias brian-n Brian Norris <computersforpeace@gmail.com>
+alias marek-v Marek Vasut <marek.vasut@gmail.com>
+alias cyrille-p Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>
+alias mtd-list linux-mtd@lists.infradead.org
+alias mtd-maintainers boris, richard-w, david-w, brian-n, marek-v, cyrille-p
+
+# ML
+alias lkml <linux-kernel@vger.kernel.org>
+alias lakml <linux-arm-kernel@lists.infradead.org>
